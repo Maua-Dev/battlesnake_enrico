@@ -1,4 +1,6 @@
+from logging import handlers
 from fastapi import FastAPI
+from fastapi import request
 from mangum import Mangum
 
 app = FastAPI()
@@ -7,7 +9,7 @@ app = FastAPI()
 
 
 @app.get("/")
-def customization():
+def get():
     return {
         "apiversion": "1",
         "color": "#ff3399",
@@ -18,23 +20,18 @@ def customization():
 
 @app.post("/start")
 def start():
-    return {
-
-    }
+    return
 
 
 @app.post("/move")
 def move():
-    return {
-        "move": "up",
-        "shout": "Moving up!"
-    }
+    game_state = request.get_json()
+    return handlers["move"](game_state)
 
 
 @app.post("/end")
 def move():
-    return {
-    }
+    return
 
 
 handler = Mangum(app, lifespan="off")
