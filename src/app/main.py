@@ -1,6 +1,5 @@
-from logging import handlers
+import random
 from fastapi import FastAPI
-from fastapi import request
 from mangum import Mangum
 
 app = FastAPI()
@@ -25,8 +24,12 @@ def start():
 
 @app.post("/move")
 def move():
-    game_state = request.get_json()
-    return handlers["move"](game_state)
+    possible_moves = ["up", "down", "left", "right"]    
+    move = random.choice(possible_moves)
+    return {
+        "move": move,
+        "shout": "Moving up!"
+    }
 
 
 @app.post("/end")
