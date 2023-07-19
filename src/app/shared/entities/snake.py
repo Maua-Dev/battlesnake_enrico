@@ -1,7 +1,7 @@
-from src.app.shared.domain.entities.position import Position
+from src.app.shared.entities.position import Position
 
 
-def Snake():
+class Snake:
     head: Position
     body: list[Position]
 

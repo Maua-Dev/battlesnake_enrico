@@ -1,8 +1,8 @@
-from src.app.shared.domain.entities.position import Position
-from src.app.shared.domain.entities.snake import Snake
+from src.app.shared.entities.position import Position
+from src.app.shared.entities.snake import Snake
 
 
-def Board():
+class Board:
     height: int
     width: int
     food: list[Position]

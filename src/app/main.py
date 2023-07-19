@@ -1,6 +1,11 @@
 import random
 from fastapi import FastAPI
 from mangum import Mangum
+from src.app.shared.entities.board import Board
+from src.app.shared.entities.position import Position
+from src.app.shared.entities.snake import Snake
+
+
 
 app = FastAPI()
 
@@ -21,52 +26,37 @@ def start():
 
 @app.post("/move")
 def move(request: dict):
-    is_move_safe = {"up": True, "down": True, "left": True, "right": True}
+    snakes_list = []
+    for snake in request["board"]["snakes"]:
+        position_list = []
+        for body_position in snake["body"]:
+            position_list.append(Position(body_position["x"], body_position["y"]))
+    snakes_list.append(Snake(Position(snake["head"]["x"], snake["head"]["y"]), position_list))
 
-    # We've included code to prevent your Battlesnake from moving backwards
-    my_head = request["you"]["body"][0]  # Coordinates of your head
-    my_neck = request["you"]["body"][1]  # Coordinates of your "neck"
+    food_list = []
+    for food in request["board"]["food"]:
+        food_list.append(Position(food["x"], food["y"]))
 
-    if my_neck["x"] < my_head["x"]:  # Neck is left of head, don't move left
-        is_move_safe["left"] = False
+    my_position_list = []
+    for my_body_position in snake["you"]["body"]:
+        my_position_list.append(Position(my_body_position["x"], my_body_position["y"]))
 
-    elif my_neck["x"] > my_head["x"]:  # Neck is right of head, don't move right
-        is_move_safe["right"] = False
+    board = Board(
+        request["board"]["height"],
+        request["board"]["width"],
+        food_list,
+        snakes_list,
+    )
 
-    elif my_neck["y"] < my_head["y"]:  # Neck is below head, don't move down
-        is_move_safe["down"] = False
+    my_snake = Snake(
+        Position(request["you"]["head"]["x"], request["you"]["head"]["y"]),
+        my_position_list,
+    )
 
-    elif my_neck["y"] > my_head["y"]:  # Neck is above head, don't move up
-        is_move_safe["up"] = False
 
-    # TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
-    # board_width = game_state['board']['width']
-    # board_height = game_state['board']['height']
 
-    # TODO: Step 2 - Prevent your Battlesnake from colliding with itself
-    # my_body = game_state['you']['body']
 
-    # TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
-    # opponents = game_state['board']['snakes']
-
-    # Are there any safe moves left?
-    safe_moves = []
-    for move, isSafe in is_move_safe.items():
-        if isSafe:
-            safe_moves.append(move)
-
-    if len(safe_moves) == 0:
-        print(f"MOVE {request['turn']}: No safe moves detected! Moving down")
-        return {"move": "down"}
-
-    # Choose a random move from the safe ones
-    next_move = random.choice(safe_moves)
-
-    # TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
-    # food = game_state['board']['food']
-
-    print(f"MOVE {request['turn']}: {next_move}")
-    return {"move": next_move}
+    return {"move": 'up'}
 
 
 @app.post("/end")
