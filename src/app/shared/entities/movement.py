@@ -63,8 +63,7 @@ class Movement():
             else:
                 moveDown = False
         
-        if(self.snake.health < 20):
-            self.eat()
+        
 
         if(moveUp):
             return {"move": "up"}
@@ -74,6 +73,8 @@ class Movement():
             return {"move": "right"}
         elif(moveLeft):
             return {"move": "left"}
+        
+        self.eat()
             
     def distance(initial: Position, final: Position):
         return sqrt((final.x - initial.x)**2 + (final.y - final.x)**2)
