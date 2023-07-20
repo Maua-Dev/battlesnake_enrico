@@ -31,7 +31,7 @@ def move(request: dict):
     my_snake = Snake.fromJson(request)
     movimentation = Movement(my_snake, board)
 
-    return movimentation.move()
+    return movimentation.eat()
 
 
 @app.post("/end")
