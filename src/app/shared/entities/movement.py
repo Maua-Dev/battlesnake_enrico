@@ -1,7 +1,7 @@
 from math import sqrt
-from src.app.shared.entities.board import Board
-from src.app.shared.entities.position import Position
-from src.app.shared.entities.snake import Snake
+from app.shared.entities.board import Board
+from app.shared.entities.position import Position
+from app.shared.entities.snake import Snake
 
 
 class Movement():
@@ -28,7 +28,7 @@ class Movement():
         moveRight = False
         moveLeft = False
         for snake in self.board.snakes:
-            for body in self.bord.snake.body:
+            for body in snake.body:
                 if(self.snake.head.x - body.x >= 3 ):
                     moveRight = True
                 else:
@@ -63,8 +63,6 @@ class Movement():
             else:
                 moveDown = False
         
-        
-
         if(moveUp):
             return {"move": "up"}
         elif(moveDown):

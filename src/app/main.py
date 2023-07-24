@@ -1,10 +1,10 @@
 import random
 from fastapi import FastAPI
 from mangum import Mangum
-from src.app.shared.entities.board import Board
-from src.app.shared.entities.movement import Movement
-from src.app.shared.entities.position import Position
-from src.app.shared.entities.snake import Snake
+from app.shared.entities.board import Board
+from app.shared.entities.movement import Movement
+from app.shared.entities.position import Position
+from app.shared.entities.snake import Snake
 
 
 
