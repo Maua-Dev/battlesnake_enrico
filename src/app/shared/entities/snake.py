@@ -1,4 +1,4 @@
-from app.shared.entities.position import Position
+from shared.entities.position import Position
 
 
 class Snake:

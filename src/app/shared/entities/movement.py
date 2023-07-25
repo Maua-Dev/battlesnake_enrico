@@ -1,7 +1,7 @@
 from math import sqrt
-from app.shared.entities.board import Board
-from app.shared.entities.position import Position
-from app.shared.entities.snake import Snake
+from shared.entities.board import Board
+from shared.entities.position import Position
+from shared.entities.snake import Snake
 
 
 class Movement():

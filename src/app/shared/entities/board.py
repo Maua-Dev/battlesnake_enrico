@@ -1,5 +1,5 @@
-from src.app.shared.entities.position import Position
-from src.app.shared.entities.snake import Snake
+from shared.entities.position import Position
+from shared.entities.snake import Snake
 
 
 class Board:
